@@ -1,0 +1,229 @@
+<div class="hero hero--indigo">
+    <div class="hero__content">
+        <div class="container center-xs">
+            <div class="row">
+                <div class="col-md-4 col-xl-2">
+                    <img style="max-height:150px" src="/static/web_app/public/img/globalnetwork.jpg">
+                </div>
+                <div class="col-md-8 col-xl-10">
+                    <div class="flex-fluid">
+                        <h1>Deploy your servers in ACI </h1>
+                        <p class="text-large">Automate the creation of APIC objects with just few clicks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="section">
+        <div class="secondary-tabs">
+            <div class="tab-content">
+                <div id="tab-intro-content" class="tab-pane active">
+                    <div class="panel panel--loose panel--bordered">
+                        <div class="row">
+                            <div class="col-md-12 text-large">
+                                <h4>Action
+                                </h4>
+                                <hr/>
+                                <div class="btn-group">
+                                    <button class="btn btn--primary-ghost sn-type action"
+                                            onclick="$('.action').removeClass('selected');$(this).addClass('selected')"
+                                            ng-click="setAction('ports')">
+                                        Ports
+                                    </button>
+                                    <button class="btn btn--primary-ghost sn-type action"
+                                            onclick="$('.action').removeClass('selected');$(this).addClass('selected')"
+                                            ng-click="setAction('rma')">
+                                        RMA
+                                    </button>
+                                </div>
+                                <div ng-if="deployment.action == 'ports'">
+                                    <br/>
+                                    <h4>Host
+                                    </h4>
+                                    <hr/>
+                                    <div class="btn-group">
+                                        <button class="btn btn--primary-ghost sn-type vm-type"
+                                                onclick="$('.vm-type').removeClass('selected');$(this).addClass('selected')"
+                                                ng-click="setVMType('windows')">
+                                            Windows
+                                        </button>
+                                        <button class="btn btn--primary-ghost sn-type vm-type"
+                                                onclick="$('.vm-type').removeClass('selected');$(this).addClass('selected')"
+                                                ng-click="setVMType('exsi')">
+                                            EXSi
+                                        </button>
+                                        <button class="btn btn--primary-ghost sn-type vm-type"
+                                                onclick="$('.vm-type').removeClass('selected');$(this).addClass('selected')"
+                                                ng-click="setVMType('aix')">
+                                            AIX
+                                        </button>
+                                    </div>
+                                    <div ng-if="deployment.vmType">
+                                        <br/>
+                                        <h4>Port
+                                        </h4>
+                                        <hr/>
+                                        <div class="btn-group">
+                                            <button class="btn btn--primary-ghost sn-type port-type"
+                                                    onclick="$('.port-type').removeClass('selected');$(this).addClass('selected')"
+                                                    ng-click="setPortType('access')">
+                                                Individual
+                                            </button>
+                                            <button class="btn btn--primary-ghost sn-type port-type"
+                                                    onclick="$('.port-type').removeClass('selected');$(this).addClass('selected')"
+                                                    ng-click="setPortType('portChannel')">
+                                                Port Channel
+                                            </button>
+                                            <button class="btn btn--primary-ghost sn-type port-type"
+                                                    onclick="$('.port-type').removeClass('selected');$(this).addClass('selected')"
+                                                    ng-click="setPortType('vpc')">
+                                                VPC
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="deployment.portType">
+                                        <br/>
+                                        <h4>Switches and interfaces
+                                            <button style="float:right" class="btn btn--icon btn--small btn--secondary"><span
+                                                    class="icon-refresh" ng-click="getPods()"></span></button>
+                                        </h4>
+                                        <hr/>
+                                        <div class="form-group">
+
+                                            <div class="form-group__text select ">
+                                                <select id="sel_pod" name="sel_pod"
+                                                        ng-options="pod as pod.fabricPod.attributes.dn for pod in pods track by pod.fabricPod.attributes.dn"
+                                                        ng-model="deployment.selectedPod"
+                                                        ng-change="getSwitches(deployment.selectedPod)">
+                                                </select>
+
+                                                <label for="sel_pod">Pod
+
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group__text select">
+                                                <select id="sel_switch"
+                                                        ng-options="switch as switch.fabricNode.attributes.name for switch in switches track by switch.fabricNode.attributes.dn"
+                                                        ng-model="deployment.selectedSwitch1"
+                                                        ng-change="getInterfaces1(deployment.selectedSwitch1)">
+                                                </select>
+                                                <label for="sel_switch">Switch 1</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group__text select">
+                                                <select id="sel_port1"
+                                                        ng-options="interface as interface.l1PhysIf.attributes.id for interface in interfaces1 track by interface.l1PhysIf.attributes.dn"
+                                                        ng-model="deployment.selectedInterface1">
+                                                </select>
+                                                <label for="sel_port1">Interface 1</label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="deployment.portType == 'portChannel'">
+
+                                            <div class="form-group">
+                                                <div class="form-group__text select">
+                                                    <select id="sel_port2_pc"
+                                                            ng-options="interface as interface.l1PhysIf.attributes.id for interface in interfaces1 track by interface.l1PhysIf.attributes.dn"
+                                                            ng-model="deployment.selectedInterface2">
+                                                    </select>
+                                                    <label for="sel_port2_pc">Interface 2</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div ng-if="deployment.portType == 'vpc'">
+                                            <div class="form-group">
+                                                <div class="form-group__text select">
+                                                    <select id="sel_switch2"
+                                                            ng-options="switch as switch.fabricNode.attributes.name for switch in switches track by switch.fabricNode.attributes.dn"
+                                                            ng-model="deployment.selectedSwitch2"
+                                                            ng-change="getInterfaces2(deployment.selectedSwitch2)">
+                                                    </select>
+                                                    <label for="sel_switch2">Switch 2</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <div class="form-group__text select">
+                                                    <select id="sel_port2"
+                                                            ng-options="interface as interface.l1PhysIf.attributes.id for interface in interfaces2 track by interface.l1PhysIf.attributes.dn"
+                                                            ng-model="deployment.selectedInterface2">
+                                                    </select>
+                                                    <label for="sel_port2">Interface 2</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div ng-if="deployment.portType">
+                                            <br/>
+                                            <h4>EPGs/VLANs
+                                                <button style="float:right"
+                                                        class="btn btn--icon btn--small btn--secondary"><span
+                                                        class="icon-refresh" ng-click="getEpgs()"></span></button>
+                                            </h4>
+                                            <hr/>
+                                            <div class="btn-group">
+                                                <button class="btn btn--primary-ghost sn-type epg-action"
+                                                        onclick="$('.epg-action').removeClass('selected');$(this).addClass('selected')"
+                                                        ng-click="setEpgAction('existing')">
+                                                    Use existing EPG
+                                                </button>
+                                                <button class="btn btn--primary-ghost sn-type epg-action"
+                                                        onclick="$('.epg-action').removeClass('selected');$(this).addClass('selected')"
+                                                        ng-click="setEpgAction('new')">
+                                                    Create new EPG
+                                                </button>
+                                            </div>
+
+                                            <div class="form-group" ng-if="deployment.epgAction == 'existing'">
+
+                                                <div class="form-group__text select ">
+                                                    <select id="sel_epg" name="sel_epg"
+                                                            ng-options="epg as epg.fvAEPg.attributes.name for epg in epgs track by epg.fvAEPg.attributes.name"
+                                                            ng-model="deployment.selectedEpg">
+                                                    </select>
+
+                                                    <label for="sel_epg">EPG/VLAN
+
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group" ng-if="deployment.epgAction == 'new'">
+
+                                                <div class="form-group__text">
+                                                    <input id="url" type="text"
+                                                           ng-model="deployment.epgVlan">
+                                                    <label for="url">VLAN</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn--success" style="float:right" ng-click="deploy();" ng-disabled="loading">
+                                            Deploy
+                                        </button>
+                                        <div ng-if="loading">
+                                            <div class="loading-dots loading-dots--info">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

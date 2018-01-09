@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="section">
+        <div class="col-md-4 secondary-tabs" style="margin-left:30%">
+            <div class="tab-content">
+                <div id="tab-intro-content" class="tab-pane active" style="min-width: 400px;">
+                    <div class="panel panel--loose panel--bordered">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel--bordered">
+                                    <div ng-if="!apic.logged">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <div class="form-group__text select">
+                                                    <select id="sel_apic" name="sel_apic" ng-model="apic.url">
+                                                        <option value="https://apic1.cisco.com/">https://apic1.cisco.com/
+                                                        </option>
+                                                        <option value="https://apic2.cisco.com/">https://apic2.cisco.com/
+                                                        </option>
+                                                    </select>
+                                                    <label for="sel_apic">APIC</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group__text">
+                                                <input id="username" type="text"
+                                                       ng-model="apic.username">
+                                                <label for="username">Username</label>
+                                            </div>
+                                            <div class="form-group__text">
+                                                <input id="password" type="password"
+                                                       ng-model="apic.password">
+                                                <label for="password">Password</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="text-center">
+                                            <button class="btn btn--primary" ng-click="login();">Login</button>
+                                        </div>
+                                    </div>
+                                    <div ng-if="apic.logged">
+                                        <div class="alert alert--success">
+                                            <div class="alert__icon icon-check"></div>
+                                            <div class="alert__message">You are logged in! Redirecting...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
