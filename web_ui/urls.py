@@ -37,5 +37,6 @@ urlpatterns = [
     url(r'^api/switch/get/?$', views.api_switch, name='api_switch'),
     url(r'^api/interface/get/?$', views.api_interface, name='api_interface'),
     url(r'^api/epgs/?$', views.api_epg, name='api_epg'),
-    url(r'^api/deploy/?$', views.api_deploy, name='api_deploy')
+    url(r'^api/deploy/?$', views.api_deploy, name='api_deploy'),
+    url(r'^api/get_apics/?$', views.api_apics),
 ]
