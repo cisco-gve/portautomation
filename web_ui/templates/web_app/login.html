@@ -10,10 +10,10 @@
                                     <div ng-if="!apic.logged">
                                         <div class="form-group">
                                             <div class="form-group">
-                                                <div class="form-group__text select">
-                                                    <select id="sel_apic" name="sel_apic" ng-model="apic.url"
-                                                    ng-options="item as item for item in apicsAvailable track by item">
-                                                    </select>
+                                                <div class="form-group__text">
+                                                    <input id="sel_apic" name="sel_apic" ng-model="apic.url"
+                                                    >
+
                                                     <label for="sel_apic">APIC</label>
                                                 </div>
                                             </div>

@@ -28,16 +28,10 @@ Contacts:
 
 You will need docker installed in your machine.
 
-Create an env variable file called envfile with the list of your apics:
-
-```
-APICS=https://apic1.cisco.com/,https://apic1.cisco.com/,https://apic1.cisco.com/
-```
-
 Execute the following command:
 
 ````
-docker run -p 8080:8080  -it --env-file envfile --name aciportautomation sfloresk/aciportautomation
+docker run -p 8080:8080  -it --name aciportautomation sfloresk/aciportautomation
 ````
 
 
@@ -65,7 +59,6 @@ install the packages in the requirements file.
 
 To run the the application execute in the root directory of the distribution:
 ```
- export APICS=https://apic1.cisco.com/,https://apic1.cisco.com/,https://apic1.cisco.com/
  python manage.py makemigrations
  python manage.py migrate
  python manage.py runserver 0.0.0.0:<PORT>

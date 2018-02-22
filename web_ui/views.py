@@ -389,28 +389,6 @@ def api_deploy(request):
         return JSONResponse("Bad request. HTTP_AUTHORIZATION header is required", status=400)
 
 
-@csrf_exempt
-def api_apics(request):
-    """
-       Return a list of APICs from the env variable APICS
-       :param request:
-       :return:
-       """
-    if request.method == 'GET':
-        try:
-            apicList = envs.get_apics().split(',')
-            result = []
-            for apic in apicList:
-                result.append({'url': apic})
-            return JSONResponse(apicList)
-        except Exception as e:
-            print(traceback.print_exc())
-            # return the error to web client
-            return JSONResponse({'error': e.__class__.__name__, 'message': str(e)}, status=500)
-    else:
-        return JSONResponse("Bad request. " + request.method + " is not supported", status=400)
-
-
 def downloads(request, file_name):
     """
     Downloads a requested file

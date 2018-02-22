@@ -221,7 +221,7 @@ appModule.controller('AppController', function($scope, $location, $http, $window
         $scope.deployment = {}
         $scope.deployment.interfaces1 = []
         $scope.deployment.interfaces2 = []
-        $scope.getApics();
+
     }
 
 
@@ -246,18 +246,6 @@ appModule.controller('AppController', function($scope, $location, $http, $window
         $scope.deployment.epgAction = epgAction;
     }
 
-    $scope.getApics = function(){
-        $http
-            .get('api/get_apics')
-            .then(function (response, status, headers, config){
-                $scope.apicsAvailable = response.data;
-            })
-            .catch(function(response, status, headers, config){
-                $scope.error = response.data.message
-            })
-            .finally(function(){
-            })
-    };
 
     $scope.login = function(){
         $http
