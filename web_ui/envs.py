@@ -23,5 +23,5 @@ __author__ = "Santiago Flores Kanter (sfloresk@cisco.com)"
 
 
 def get_apics():
-    return os.getenv("APICS", "") 
+    return os.getenv("APICS", "")
 
